@@ -5,6 +5,15 @@
     {
       "library": "bootstrap@4.0.0",
       "destination": "wwwroot/bootstrap/"
+    },
+    {
+      "library": "fontawesome@4.7.0",
+      "destination": "wwwroot/fontawesome/"
+    },
+    {
+      "provider": "cdnjs",
+      "library": "font-awesome@4.7.0",
+      "destination": "wwwroot/font-awesome/"
     }
   ]
 }
