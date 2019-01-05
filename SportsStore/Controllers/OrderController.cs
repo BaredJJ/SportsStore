@@ -24,19 +24,33 @@ namespace SportsStore.Controllers
             if(!_cart.Lines.Any())
                 ModelState.AddModelError("", "Sorry your cart is empty!");
 
-            if (ModelState.IsValid)
-            {
-                order.Lines = _cart.Lines.ToArray();
-                _orderRepository.SaveOrder(order);
-                return RedirectToAction(nameof(Completed));
-            }
-            else return View(order);
+            if (!ModelState.IsValid) return View(order);
+
+            order.Lines = _cart.Lines.ToArray();
+            _orderRepository.SaveOrder(order);
+            return RedirectToAction(nameof(Completed));
+
         }
 
         public ViewResult Completed()
         {
             _cart.Clear();
             return View();
+        }
+
+        public ViewResult List() => View(_orderRepository.Orders.Where(o => !o.Shipped));
+
+        [HttpPost]
+        public IActionResult MarkShipped(int orderId)
+        {
+            var order = _orderRepository.Orders.FirstOrDefault(o => o.OrderId == orderId);
+            if (order != null)
+            {
+                order.Shipped = true;
+                _orderRepository.SaveOrder(order);
+            }
+
+            return RedirectToAction(nameof(List));
         }
     }
 }

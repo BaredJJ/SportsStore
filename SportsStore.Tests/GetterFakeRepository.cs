@@ -1,5 +1,4 @@
 ﻿using Moq;
-using SportsStore.Controllers;
 using SportsStore.Models;
 using System.Linq;
 
@@ -10,9 +9,14 @@ namespace SportsStore.Tests
 
         public static IProductRepository GetProductRepository(IQueryable<Product> products)
         {
+            return GetMockIProductRepository(products).Object;
+        }
+
+        public static Mock<IProductRepository> GetMockIProductRepository(IQueryable<Product> products)
+        {
             var repository = new Mock<IProductRepository>();
             repository.Setup(m => m.Products).Returns(products);
-            return repository.Object;
+            return repository;
         }
 
         public static IQueryable<Product> GetProductWithCategory()

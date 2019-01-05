@@ -19,7 +19,7 @@ namespace SportsStore.Tests
 
             var result =((IEnumerable<string>)(target.Invoke() as ViewViewComponentResult).ViewData.Model).ToArray();
 
-            Assert.True(Enumerable.SequenceEqual(categories, result));
+            Assert.True(categories.SequenceEqual(result));
         }
 
         [Theory]

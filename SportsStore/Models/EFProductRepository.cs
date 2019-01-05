@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SportsStore.Models
 {
@@ -15,5 +13,35 @@ namespace SportsStore.Models
         }
 
         public IQueryable<Product> Products => _dbContext.Products;
+
+        public void SaveProduct(Product product)
+        {
+            if (product.ProductId == 0)
+                _dbContext.Products.Add(product);
+            else
+            {
+                var dbEntry = _dbContext.Products.FirstOrDefault(p => p.ProductId == product.ProductId);
+                if (dbEntry != null)
+                {
+                    dbEntry.Name = product.Name;
+                    dbEntry.Description = product.Description;
+                    dbEntry.Price = product.Price;
+                    dbEntry.Category = product.Category;
+                }
+            }
+
+            _dbContext.SaveChanges();
+        }
+
+        public Product DeleteProduct(int productId)
+        {
+            var dbEntry = _dbContext.Products.FirstOrDefault(p => p.ProductId == productId);
+
+            if (dbEntry == null) return null;
+
+            _dbContext.Products.Remove(dbEntry);
+            _dbContext.SaveChanges();
+            return dbEntry;
+        }
     }
 }

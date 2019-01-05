@@ -26,12 +26,12 @@ namespace SportsStore.Tests
         private void List_ValidArgument_CanFilterProductsSameLength()
         {
             const string category = "Cat2";
-            var lenght = GetProductWithCategory().Where(p => p.Category == category).Count();
+            var length = GetProductWithCategory().Count(p => p.Category == category);
             var controller = GetProductControllerWithCategory();
 
             var result = (controller.List(category, 1).ViewData.Model as ProductsListViewModel).Products.ToArray().Length;
 
-            Assert.True(result == lenght);
+            Assert.True(result == length);
         }
 
         [Fact]
@@ -58,10 +58,10 @@ namespace SportsStore.Tests
             controller.PageSize = 3;
 
             var result = (controller.List(null, 2).ViewData.Model as ProductsListViewModel).Products;
-            var lenght = result.Count();
+            var length = result.Count();
 
 
-            Assert.True(lenght == standardLength);
+            Assert.True(length == standardLength);
         }
 
         [Fact]

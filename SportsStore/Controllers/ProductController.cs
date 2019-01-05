@@ -43,7 +43,7 @@ namespace SportsStore.Controllers
                         ItemsPerPage = PageSize,
                         TotalItems = category == null ?
                         _productRepository.Products.Count():
-                        _productRepository.Products.Where(e => e.Category == category).Count()
+                        _productRepository.Products.Count(e => e.Category == category)
                     },
                     CurrentCategory = category
                 }

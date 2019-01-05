@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SportsStore.Models
 {
@@ -15,7 +13,7 @@ namespace SportsStore.Models
 
         public virtual void AddItem(Product product, int quantity)
         {
-            var line = _lines.Where(p => p.Product.ProductId == product.ProductId).FirstOrDefault();
+            var line = _lines.FirstOrDefault(p => p.Product.ProductId == product.ProductId);
 
             if (line == null)
             {
